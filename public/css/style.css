@@ -1,0 +1,20 @@
+.background-image{
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    position: fixed;
+    opacity: .2;
+    z-index: -1;
+}
+
+.discord-card:hover{
+    box-shadow: 0 0 10px #0D6EFD;
+}
+
+.instagram-card:hover{
+    box-shadow: 0 0 10px #DC3545;
+}
+
+.instagram-card, .discord-card{
+    transition: .2s ease-in;
+}
