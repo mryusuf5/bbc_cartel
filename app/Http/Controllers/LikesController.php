@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\likes;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Session;
 
 class LikesController extends Controller
 {
@@ -28,7 +29,14 @@ class LikesController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $like = new likes();
+
+        $like->user_id = Session::get('user')->id;
+        $like->image_id = $request->image_id;
+
+        $like->save();
+
+        return redirect()->route('images.index');
     }
 
     /**
@@ -58,8 +66,10 @@ class LikesController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(likes $likes)
+    public function destroy($id)
     {
-        //
+        likes::destroy($id);
+
+        return redirect()->route('images.index');
     }
 }

@@ -13,9 +13,25 @@
                 <div class="card-body bg-dark text-white rounded-bottom">
                     <div class="d-flex justify-content-between">
                         <div class="d-flex gap-4 align-items-center">
-                            <a href="">
-                                <i class="fa-regular fa-heart text-secondary fs-3"></i>
-                            </a>
+                            @if(Session::get('user'))
+                                @if($image->is_liked)
+                                    <form action="{{route('likes.destroy',$image->is_liked->id)}}" method="post">
+                                        @csrf
+                                        @method('DELETE')
+                                        <button type="submit" style="outline: 0; border: 0; background: transparent;">
+                                            <i class="fa-regular fa-heart text-danger fs-3"></i>
+                                        </button>
+                                    </form>
+                                @else
+                                    <form action="{{route('likes.store', ['image_id' => $image->id])}}" method="post">
+                                        @csrf
+                                        @method('POST')
+                                        <button type="submit" style="outline: 0; border: 0; background: transparent;">
+                                            <i class="fa-regular fa-heart text-secondary fs-3"></i>
+                                        </button>
+                                    </form>
+                                @endif
+                            @endif
                             <a href="">
                                 <i class="fa-regular fa-comment text-secondary fs-3"></i>
                             </a>
@@ -31,7 +47,7 @@
                     </div>
 
                     <br>
-                    <small class="muted">506 likes</small>
+                    <small class="muted">{{$image->like_ammount}} likes</small>
                     <h5 class="card-title">{{$image->title}}</h5>
                     <p class="card-text">{{$image->description}}</p>
                 </div>

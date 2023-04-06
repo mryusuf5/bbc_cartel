@@ -3,6 +3,7 @@
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\ImagesController;
 use App\Http\Controllers\UserController;
+use App\Http\Controllers\LikesController;
 
 /*
 |--------------------------------------------------------------------------
@@ -29,3 +30,4 @@ Route::get('instellingen', [UserController::class, 'settingsView'])->name('setti
 Route::post('instellingen', [UserController::class, 'settings']);
 
 Route::resource('images', ImagesController::class);
+Route::resource('likes', LikesController::class);
