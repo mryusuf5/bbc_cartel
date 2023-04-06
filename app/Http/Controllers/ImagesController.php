@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\images;
+use App\Models\likes;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Session;
@@ -14,9 +15,34 @@ class ImagesController extends Controller
      */
     public function index()
     {
+        $loggedinId = Session::get('user')->id;
+
         $images = DB::table('images')
             ->join('users', 'users.id', '=', 'images.user_id')
+            ->select('users.name', 'users.profile_picture', 'images.*')
+            ->get()
+        ->map(function($image) use ($loggedinId){
+            $likes = likes::where('user_id', $loggedinId)
+                ->where('image_id', $image->id)
+                ->get();
+
+            $likeAmmount = likes::where('image_id', $image->id)
             ->get();
+
+            $image->like_ammount = count($likeAmmount);
+
+            if(count($likes) > 0)
+            {
+                $image->is_liked = $likes->first();
+            }
+            else
+            {
+                $image->is_liked = false;
+            }
+
+            return $image;
+        });
+
         return view('user.images.index', compact('images'));
     }
 
