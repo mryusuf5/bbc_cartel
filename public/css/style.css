@@ -18,3 +18,12 @@
 .instagram-card, .discord-card{
     transition: .2s ease-in;
 }
+.linksContainer i{
+    font-size: 10rem;
+}
+
+@media only screen and (max-width: 992px) {
+    .linksContainer i{
+        font-size: 6rem;
+    }
+}
